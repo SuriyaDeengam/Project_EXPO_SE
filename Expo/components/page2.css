@@ -1,0 +1,56 @@
+.p1-con1{
+    height: 30%;
+    width: 100%;
+}
+.p1-con2{
+    height: 5%;
+    width: 100%;
+}
+.p1-con3{
+    height: 50%;
+    width: 100%;
+}
+.p1-con4{
+    height: 15%;
+    width: 100%;
+    cursor: pointer;
+}
+
+.p1-con4 img{
+    height: 80%;
+}
+
+
+.con1logo{
+    height: 100%;
+    width: 13%;
+}
+
+.con1detail{
+    height: 100%;
+    width: 30%;
+}
+.con1detail-row{
+    width: 100%;
+}
+.con1-text1{
+    width: 30%;
+}
+.con1-text2{
+    width: 70%;
+    height: 2em;
+}
+.con1-text2 input{
+    width: 100%;
+    outline: none;
+    height: 80%;
+}
+
+.con1-text1 h3{
+    color: black;
+}
+
+.con3-box{
+    height: 100%;
+    width: 40%;
+}

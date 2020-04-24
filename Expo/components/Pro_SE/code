@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<?php
+require './config.php';
+$y=0;
+
+$student1 = "SELECT * FROM student";
+$student = mysqli_query($conn, $student1);
+
+$gro = "SELECT * FROM creategroup";
+$group = mysqli_query($conn, $gro);
+
+
+$na =  "SELECT creategroup.Group_id,creategroup.Student_id , student.FnameT, student.LnameT FROM student,creategroup WHERE creategroup.Student_id = student.Student_id";
+$name = mysqli_query($conn, $na);
+?>
+
+<body>
+    <div class="col-sm-2"></div>
+    <div class="col-sm-8">
+        <table class="table table-bordered" style="margin-top: 5%;margin-right: 10% ;border-color: black;" id="myTable">
+    
+    </table>
+    </div>
+    <div class="col-sm-2">
+        <button type="button" onclick="update(),selectteceher()" id="red" style="margin-left: 40%; margin-top: 30%" class="btn btn-secondary btn-lg">
+            <h4 id="setwhite">ตกลง</h4>
+        </button></div>
+    <div class="col-sm-12" style="margin-left: 22%">
+        <a onclick="add_row1()">
+            <img src="iconSE/plus.png" style="width: 20%; margin: 10% ; min-width: 20mm; max-width: 20mm;">
+        </a>
+        <a onclick="del_row()">
+            <img src="iconSE/minus.png" style="width: 20%; margin: 10% ; min-width: 20mm; max-width: 20mm;">
+        </a>
+
+    </div>
+</body>
+<script>
+    function update() {
+        var tablegroup = document.getElementsByClassName('tablegroup');
+        var groupname = document.getElementsByClassName('groupname');
+        var studentname = document.getElementsByClassName('studentname');
+        var length1 = tablegroup.length;
+        var length3 = length1;
+        var student = [];
+        var test = 0;
+        for (var i = 0; i < length1; i++) {
+            var length2 = tablegroup[i].getElementsByClassName('studentname').length;
+            var group_name = document.getElementsByClassName('groupname')[i].value;
+            var sub = [];
+            sub.push(length1);
+            sub.push(group_name);
+            for (var j = 0; j < length2; j++) {
+                // console.log(tablegroup[i].getElementsByClassName('studentname')[j].value);
+
+                sub.push(tablegroup[i].getElementsByClassName('studentname')[j].value);
+                console.log("นิสิตคนที่");
+                if (tablegroup[i].getElementsByClassName('studentname')[0].value == test) {
+                    console.log("ว่าง");
+                    test = 99;
+                }
+                console.log(tablegroup[i].getElementsByClassName('studentname')[j].value);
+                console.log("กลุ่ม");
+                console.log(sub[j]);
+                console.log("test");
+                console.log(test);
+            }
+
+            student.push(sub);
+            console.log(student[0][2]);
+
+            // console.log("student");
+            //     console.log(student[0][2]);
+        }
+        // console.log(student);
+        if (test != 99) {
+            console.log("ไม่ว่าง");
+            $.ajax({
+                type: "POST",
+                url: 'updateGroup.php',
+                data: {
+                    data: student
+                },
+                success: function(res) {
+                    console.log(res);
+                    alert(res);
+                },
+            });
+        } else {
+            console.log("ว่าง");
+            alert("เลือกนิสิตอย่างน้อย 1 คนต่อกลุ่ม");
+        }
+    }
+
+
+
+    function add_row1() {
+        var table = document.getElementById("myTable");
+        var count = document.getElementsByClassName('tablegroup').length;
+        var code = "<tr class='tablegroup'><td><div><h3 align='center' style='width: 100mm ; background-color: #7c0000; color: white;padding: 2%;margin-top: 5%; w'>กลุ่มที่ " + (count +<?php echo $y ?>+1) + " </h3></div><input class='form-control groupname' placeholder='ชื่อโปรเจค' style='margin-bottom: 5%' </td> <td><div class='col-sm-12'><select class='studentname browser-default custom-select custom-select-lg mb-3'><option value='0' disabled selected>เลือกชื่อนิสิต</option><?php while ($result = mysqli_fetch_array($student, MYSQLI_ASSOC)) {  ?><option value='<?php echo $result['Student_id']; ?>'><?php echo $result['FnameT'];
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    echo ' ';
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    echo $result['LnameT']; ?></option><?php }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        mysqli_data_seek($student, 0); ?></select><select class='studentname browser-default custom-select custom-select-lg mb-3'><option value='0' disabled selected>เลือกชื่อนิสิต</option><?php while ($result = mysqli_fetch_array($student, MYSQLI_ASSOC)) {  ?><option value='<?php echo $result['Student_id']; ?>'><?php echo $result['FnameT'];
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                echo ' ';
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                echo $result['LnameT']; ?></option><?php }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    mysqli_data_seek($student, 0); ?></select><select class='studentname browser-default custom-select custom-select-lg mb-3'><option value='0' disabled selected>เลือกชื่อนิสิต</option><?php while ($result = mysqli_fetch_array($student, MYSQLI_ASSOC)) {  ?><option value='<?php echo $result['Student_id']; ?>'><?php echo $result['FnameT'];
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            echo ' ';
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            echo $result['LnameT']; ?></option><?php }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                mysqli_data_seek($student, 0); ?></select></div></td></tr>";
+
+        table.insertAdjacentHTML('beforeend', code);
+    }
+
+    function del_row() {
+        var table = document.getElementById("myTable");
+        count_rows = document.getElementsByClassName('tablegroup').length;
+        document.getElementById("myTable").deleteRow(count_rows - 1);
+    }
+</script>
